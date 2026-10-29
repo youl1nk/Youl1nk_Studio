@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Youl1nk Studio — HTML Maker & Editor</title>
+<style>
+:root{color-scheme:dark;--bg:#090d18;--panel:#111827;--panel2:#151f32;--line:#29364d;--muted:#91a0b8;--text:#edf4ff;--cyan:#6ee7f9;--purple:#a78bfa;--green:#5ee6a8}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 15% 0%,#172554 0,transparent 38%),radial-gradient(ellipse at 100% 10%,#30145c 0,transparent 32%),var(--bg);color:var(--text);font:14px/1.45 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
+button,input,select{font:inherit}button{cursor:pointer;border:1px solid var(--line);color:var(--text);background:#1a263a;border-radius:10px;padding:9px 12px;transition:.16s}button:hover{border-color:#6ee7f9;transform:translateY(-1px)}button.primary{background:linear-gradient(135deg,#7c3aed,#2563eb);border:0;font-weight:750}button.green{background:#123d35;border-color:#246d5b;color:#a7f3d0}button:disabled{opacity:.45;cursor:not-allowed}
+header{height:72px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 22px;border-bottom:1px solid #26334b;background:#0a1020d9;backdrop-filter:blur(18px);position:sticky;top:0;z-index:10}
+.brand{display:flex;align-items:center;gap:12px;min-width:200px}.logo{height:42px;width:42px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(135deg,#22d3ee,#8b5cf6);color:#07111f;font-size:21px;font-weight:950;box-shadow:0 8px 30px #6d28d944}.brand h1{font-size:17px;margin:0;letter-spacing:-.4px}.brand p{margin:2px 0 0;color:var(--muted);font-size:11px}.top-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.project{display:flex;align-items:center;gap:8px;padding:7px 10px;border:1px solid var(--line);background:#101a2b;border-radius:11px}.project label{color:var(--muted);font-size:11px}.project input{width:155px;max-width:28vw;color:var(--text);background:transparent;border:0;outline:0;font-weight:700}
+main{padding:18px;max-width:1800px;margin:auto}.welcome{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin:0 2px 16px}.eyebrow{color:var(--cyan);text-transform:uppercase;font-size:10px;letter-spacing:2px;font-weight:800}.welcome h2{font-size:clamp(22px,3vw,31px);letter-spacing:-1px;margin:5px 0}.welcome p{margin:0;color:var(--muted);max-width:650px}.status{white-space:nowrap;border:1px solid #225c4e;background:#0d2927;color:var(--green);padding:7px 10px;border-radius:99px;font-size:12px}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:10px;background:#101827e8;border:1px solid var(--line);border-radius:15px;margin-bottom:14px}.toolgroup{display:flex;gap:7px;align-items:center}.sep{height:25px;width:1px;background:var(--line);margin:0 3px}.toolhint{margin-left:auto;color:var(--muted);font-size:11px}
+.workspace{display:grid;grid-template-columns:minmax(300px,1fr) minmax(320px,1fr);gap:14px;align-items:stretch}.pane{min-width:0;border:1px solid var(--line);background:#0e1625ed;border-radius:16px;overflow:hidden;box-shadow:0 20px 60px #0002}.pane-head{height:53px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px;background:#131e30;border-bottom:1px solid var(--line)}.pane-title{display:flex;align-items:center;gap:9px;font-weight:800}.dot{width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 12px #6ee7f988}.pane-title small{display:block;color:var(--muted);font-weight:500;font-size:10px}.pane-head-actions{display:flex;gap:6px}.pane-head button{padding:6px 9px;font-size:11px}
+.editor-wrap{position:relative;height:min(68vh,760px);min-height:420px;background:#080e19}.linebar{position:absolute;top:0;bottom:0;left:0;width:42px;padding:14px 8px;color:#50617b;text-align:right;background:#0c1422;border-right:1px solid #1d2b40;font:12px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace;overflow:hidden;user-select:none;white-space:pre}.editor{position:absolute;inset:0 0 0 42px;width:calc(100% - 42px);height:100%;resize:none;border:0;outline:0;padding:14px 16px;background:transparent;color:#d5e5ff;font:12px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace;tab-size:2;white-space:pre;overflow:auto;caret-color:var(--cyan)}.editor::selection{background:#374d75}.editor-foot{display:flex;justify-content:space-between;gap:8px;padding:8px 13px;border-top:1px solid var(--line);color:var(--muted);font-size:10px}.preview-wrap{height:min(68vh,760px);min-height:420px;background:#f8fafc;position:relative}.preview-wrap iframe{width:100%;height:100%;border:0;background:white}.preview-empty{position:absolute;inset:0;display:none;place-items:center;text-align:center;color:#64748b;background:#f8fafc;padding:30px}.preview-empty strong{display:block;color:#334155;font-size:18px;margin:10px}.preview-foot{display:flex;justify-content:space-between;gap:8px;padding:8px 13px;background:#111b2b;border-top:1px solid var(--line);color:var(--muted);font-size:10px}.bottom{display:grid;grid-template-columns:1.4fr 1fr;gap:14px;margin-top:14px}.info{border:1px solid var(--line);border-radius:14px;padding:14px 16px;background:#101827b8}.info h3{font-size:13px;margin:0 0 8px}.info p{font-size:12px;color:var(--muted);margin:0}.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.step{padding:10px;border-radius:10px;background:#172238}.step b{display:block;font-size:12px;margin-bottom:3px}.step span{font-size:10px;color:var(--muted)}.kbd{font:10px ui-monospace,monospace;padding:3px 5px;border:1px solid #40506a;border-radius:5px;color:#c6d5ed}
+#fileInput{display:none}.toast{position:fixed;bottom:18px;left:50%;transform:translate(-50%,20px);background:#d9fbe9;color:#063b2d;padding:10px 16px;border-radius:11px;font-weight:750;box-shadow:0 12px 35px #0005;opacity:0;pointer-events:none;transition:.2s;z-index:30}.toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* Beginner-friendly visual builder */
+.builder{margin:0 0 14px;border:1px solid #354766;border-radius:16px;background:linear-gradient(135deg,#121e32,#101827);overflow:hidden}
+.builder-head{padding:15px 17px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+.inspector{border:1px solid #36506e;background:linear-gradient(145deg,#111e31,#0c1423);border-radius:16px;margin:0 0 14px;overflow:hidden}.inspector-head{padding:16px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.inspector-head h3{margin:0;font-size:16px}.inspector-head p{margin:5px 0 0;color:var(--muted);font-size:12px}.inspect-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:14px}.inspect-card{border:1px solid #2c3b54;background:#0b1423;border-radius:12px;padding:13px;min-width:0}.inspect-card h4{margin:0 0 6px;font-size:13px}.inspect-card p{color:var(--muted);font-size:11px;margin:0 0 8px}.inspect-card label{display:block;font-size:11px;color:#cbd5e1;margin:8px 0 4px}.inspect-card select,.inspect-card input[type=text],.inspect-card input[type=file],.inspect-card textarea{width:100%;min-width:0;border:1px solid #35445e;background:#111d30;color:var(--text);padding:9px;border-radius:8px;font:inherit;font-size:12px}.inspect-card button{margin-top:10px}.detect-list{display:grid;gap:7px;margin-top:8px}.detect-item{border:1px solid #29364d;border-radius:9px;padding:8px;background:#111b2b;font-size:11px}.detect-item b{display:block;color:#dbeafe;font-size:12px}.detect-item span{color:var(--muted);overflow-wrap:anywhere}.inspect-foot{padding:0 14px 14px;color:#b8c6dc;font-size:11px}.inspect-actions{display:flex;gap:8px;flex-wrap:wrap}.inspect-actions button{margin:0}@media(max-width:650px){.inspect-grid{grid-template-columns:1fr}}
+.builder-head h3{margin:0;font-size:16px}.builder-head p{margin:4px 0 0;color:var(--muted);font-size:12px}
+.builder-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:14px}
+.builder-card{border:1px solid #2c3b54;background:#0b1423;border-radius:12px;padding:13px;min-width:0}
+.builder-card h4{margin:0 0 5px;font-size:13px}.builder-card .help{margin:0 0 10px;color:var(--muted);font-size:11px}
+.builder-card label{display:block;color:#cbd5e1;font-size:11px;margin:8px 0 4px}
+.builder-card input[type=text],.builder-card input[type=url],.builder-card textarea,.builder-card input[type=file]{width:100%;min-width:0;border:1px solid #35445e;background:#111d30;color:var(--text);padding:9px;border-radius:8px;font:inherit;font-size:12px}
+.builder-card textarea{min-height:72px;resize:vertical}.builder-card button{margin-top:10px;width:100%}
+.builder-note{padding:0 14px 14px;color:#b8c6dc;font-size:11px}
+.patchnotes{margin-top:14px;border:1px solid var(--line);border-radius:14px;background:#101827;padding:14px 16px}.patchnotes h3{margin:0 0 8px;font-size:13px}.patchnotes ul{margin:0;padding-left:20px;color:var(--muted);font-size:12px}.patchnotes li{margin:5px 0}.release-summary{color:var(--muted);font-size:12px;margin:0 0 10px}.roadmap-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}.roadmap-item{padding:13px;border:1px solid var(--line);border-radius:11px;background:#0b1423}.roadmap-item h4{margin:7px 0 5px;font-size:13px}.roadmap-item p{margin:0;color:var(--muted);font-size:12px}.roadmap-version{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--cyan);font-weight:800}@media(max-width:650px){.roadmap-grid{grid-template-columns:1fr}}
+@media(max-width:650px){.builder-grid{grid-template-columns:1fr}}
+
+
+/* Youl1nk Studio v2.1.0 — visual maker + intro */
+.intro-overlay{position:fixed;inset:0;z-index:100;background:#050814eF;backdrop-filter:blur(16px);display:grid;place-items:center;padding:20px;transition:opacity .25s ease,visibility .25s ease}.intro-overlay.hidden{opacity:0;visibility:hidden;pointer-events:none}.intro-card{width:min(760px,100%);border:1px solid #354766;border-radius:26px;padding:clamp(22px,5vw,42px);background:radial-gradient(ellipse at top right,#3b1f69 0,transparent 40%),linear-gradient(145deg,#121d31,#090f1d);box-shadow:0 30px 100px #0008}.intro-mark{width:58px;height:58px;display:grid;place-items:center;border-radius:18px;background:linear-gradient(135deg,#67e8f9,#a78bfa);color:#07111f;font-size:24px;font-weight:900;margin-bottom:24px}.intro-card h2{font-size:clamp(30px,6vw,48px);letter-spacing:-1.8px;margin:8px 0 10px}.intro-card>p{color:#b8c6dc;max-width:560px;line-height:1.7}.intro-features{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:25px 0}.intro-features div{padding:14px;border:1px solid #293b57;background:#0c1525;border-radius:14px}.intro-features b,.intro-features span{display:block}.intro-features b{margin-bottom:7px}.intro-features span{font-size:12px;color:var(--muted);line-height:1.55}.intro-bottom{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:12px}.intro-bottom b{color:#e2e8f0}.visual-editor{margin:0 0 14px;border:1px solid #354766;border-radius:16px;background:linear-gradient(135deg,#121e32,#101827);overflow:hidden}.visual-head{padding:16px 17px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap}.visual-head h3{margin:5px 0;font-size:17px}.visual-head p{margin:0;color:var(--muted);font-size:12px;max-width:720px}.visual-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:14px}.visual-card{border:1px solid #2c3b54;background:#0b1423;border-radius:12px;padding:14px;min-width:0}.visual-card h4{margin:0 0 5px;font-size:13px}.visual-card .help{margin:0 0 10px;color:var(--muted);font-size:11px}.visual-card label{display:block;color:#cbd5e1;font-size:11px;margin:9px 0 4px}.visual-card input[type=text],.visual-card select,.visual-card textarea{width:100%;min-width:0;border:1px solid #35445e;background:#111d30;color:var(--text);padding:9px;border-radius:8px;font:inherit;font-size:12px}.visual-card textarea{min-height:65px;resize:vertical}.visual-card input[type=color]{width:100%;height:38px;border:1px solid #35445e;background:#111d30;border-radius:8px;padding:4px}.field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.visual-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.visual-actions button{flex:1}.visual-note{padding:0 14px 14px;color:#b8c6dc;font-size:11px}
+@media(max-width:650px){.intro-features,.visual-grid{grid-template-columns:1fr}.intro-bottom{align-items:flex-start;flex-direction:column}.field-row{grid-template-columns:1fr 1fr}}
+
+@media(max-width:850px){header{height:auto;align-items:flex-start;flex-direction:column}.top-actions{justify-content:flex-start;width:100%}.workspace{grid-template-columns:1fr}.editor-wrap,.preview-wrap{height:58vh;min-height:340px}.bottom{grid-template-columns:1fr}.welcome{align-items:flex-start;flex-direction:column}.toolhint{display:none}.project{flex:1}.project input{max-width:none;width:100%}}
+</style>
+</head>
+<body>
+<header>
+ <div class="brand"><div class="logo">&lt;/&gt;</div><div><h1>Youl1nk Studio</h1><p>HTML MAKER • EDITOR • PROJECT EXPLORER · v2.1.0</p></div></div>
+ <div class="top-actions">
+ <div class="project"><div><label for="projectName">PROJECT NAME</label><br><input id="projectName" value="My Awesome Website" maxlength="70" aria-label="Project name"></div></div>
+ <button id="openBtn">↥ Open HTML</button><button id="saveBtn" class="primary">↓ Download HTML</button>
+ </div>
+</header>
+<div class="intro-overlay" id="introOverlay" role="dialog" aria-modal="true" aria-labelledby="introTitle">
+ <div class="intro-card">
+ <div class="intro-mark">&lt;/&gt;</div><div class="eyebrow">WELCOME TO YOUL1NK STUDIO</div>
+ <h2 id="introTitle">From idea to website.</h2>
+ <p>Create, open, understand, and edit HTML projects — even if you have never written code before.</p>
+ <div class="intro-features"><div><b> Visual editing</b><span>Change headings, text, colors, sizes, and element placement.</span></div><div><b>⌘ Open projects</b><span>Import an HTML file, explore its structure, and continue editing.</span></div><div><b>↗ Preview and export</b><span>Preview your changes, then save them as a new HTML file.</span></div></div>
+ <div class="intro-bottom"><span>Developed by <b>youl1nk</b> · Version 2.1.0</span><button class="primary" id="startStudio">Get started →</button></div>
+ </div>
+</div>
+<main>
+ <section class="welcome"><div><div class="eyebrow">YOUl1NK STUDIO · V2.1.0</div><h2>Your website, your way. </h2><p>More than an inspector. Open an existing HTML project, edit its content and appearance visually, add images or audio, edit the code whenever you want, then preview and export your project.</p></div><div class="status" id="status">● Ready to edit</div></section>
+ <div class="toolbar">
+ <div class="toolgroup"><button id="previewBtn" class="green">▶ Run Preview</button><button id="resetBtn">↺ Starter template</button></div><div class="sep"></div>
+ <div class="toolgroup"><button id="formatBtn"> Format code</button><button id="copyBtn">▣ Copy code</button></div><div class="sep"></div>
+ <div class="toolgroup"><button id="sampleBtn"> Sample page</button></div><span class="toolhint"><span class="kbd">Ctrl</span> + <span class="kbd">Enter</span> to preview</span>
+ </div>
+
+ <section class="inspector" aria-labelledby="inspectorTitle">
+ <div class="inspector-head"><div><h3 id="inspectorTitle"> Project Inspector — understand your project</h3><p>Open an HTML project to map its header, title, content, images, audio, buttons, and other detected areas. Choose a target before adding content.</p></div><span class="kbd">AUTO-DETECT</span></div>
+ <div class="inspect-grid">
+  <article class="inspect-card"><h4>1. Project analysis</h4><p id="detectSummary">No project analyzed yet. Open an HTML file to see its structure.</p><div id="detectList" class="detect-list"><div class="detect-item"><b>Example structure</b><span>Header → Main/Body → Section → Footer</span></div></div><div class="inspect-actions" style="margin-top:10px"><button id="analyzeBtn" class="green">↻ Analyze code again</button></div></article>
+  <article class="inspect-card"><h4>2. Choose a content location</h4><p>New content will be inserted into your chosen area instead of being placed at the bottom by default.</p><label for="insertTarget">Where should it go?</label><select id="insertTarget"><option value="auto">Automatic: main content area</option></select><label for="insertPosition">Position within that area</label><select id="insertPosition"><option value="append">Inside the area, at the bottom</option><option value="prepend">Inside the area, at the top</option><option value="before">Before the area</option><option value="after">After the area</option><option value="bodyEnd">At the end of the page</option></select><p id="targetRule">Rule: use &lt;main&gt; when available; otherwise use &lt;body&gt;.</p></article>
+  <article class="inspect-card"><h4>3. Image settings</h4><p>The image will be embedded in the standalone HTML file. Choose its location and display size.</p><label for="imagePlacement">Image location</label><select id="imagePlacement"><option value="selected">Use the selected location above</option><option value="header">Header / hero</option><option value="main">Main content</option><option value="beforeFooter">Before the footer</option><option value="bodyEnd">At the bottom of the page</option></select><label for="imageWidth">Image width</label><select id="imageWidth"><option value="responsive">Responsive (recommended)</option><option value="small">Small — max 320 px</option><option value="medium">Medium — max 640 px</option><option value="full">Full width</option></select><label for="imageCaption">Image caption (optional)</label><input id="imageCaption" type="text" placeholder="Example: Chapter 1 album cover" /></article>
+  <article class="inspect-card"><h4>4. Audio / music settings</h4><p>Choose the player location and playback behavior. Browsers usually block autoplay with sound until the user interacts with the page.</p><label for="audioPlacement">Audio player location</label><select id="audioPlacement"><option value="selected">Use the selected location above</option><option value="header">Header / hero</option><option value="main">Main content</option><option value="afterImage">After the last image</option><option value="beforeFooter">Before the footer</option><option value="bodyEnd">At the bottom of the page</option></select><label for="audioBehavior">When should audio play?</label><select id="audioBehavior"><option value="manual">When the visitor presses Play (recommended)</option><option value="click">After the visitor presses the “Play audio” button</option><option value="visible">When the audio section becomes visible (autoplay may be blocked)</option><option value="loadMuted">When the page opens, muted (autoplay may be blocked)</option></select><label for="audioLoop">Repeat</label><select id="audioLoop"><option value="no">Play once</option><option value="yes">Loop continuously</option></select></article>
+ </div><div class="inspect-foot">Note: detection reads common HTML structures. Projects that build pages dynamically with JavaScript, use frameworks, or have unusual structures may need manual review. Images and audio are embedded as data URLs; large media files increase the HTML file size.</div>
+ </section>
+ <section class="visual-editor" aria-labelledby="visualTitle">
+ <div class="visual-head"><div><div class="eyebrow">VISUAL EDITING WITHOUT CODING</div><h3 id="visualTitle"> Visual Mode — edit page content and appearance</h3><p>Choose an element, change its text or style, and select Apply. Changes are written directly to your HTML project.</p></div><span class="kbd">VISUAL MAKER</span></div>
+ <div class="visual-grid">
+  <article class="visual-card"><h4>A. Page identity</h4><p class="help">The project name used for the exported file is different from the browser tab title. You can change both.</p>
+  <label for="pageTitle">Page title / browser tab</label><input id="pageTitle" type="text" placeholder="Example: My Portfolio">
+  <label for="pageDescription">Page description (meta description)</label><textarea id="pageDescription" placeholder="A short description of this website"></textarea>
+  <button class="primary" id="applyPageInfo">Apply page identity</button>
+  </article>
+  <article class="visual-card"><h4>B. Edit an existing element</h4><p class="help">Choose an element detected during analysis, such as a heading, paragraph, button, section, or footer.</p>
+  <label for="visualTarget">Element to edit</label><select id="visualTarget"><option value="">Analyze the project first</option></select>
+  <label for="visualText">New text (leave blank to keep the current text)</label><textarea id="visualText" placeholder="Enter replacement text here"></textarea>
+  <div class="visual-actions"><button id="loadElementText">Load current text</button><button class="primary" id="applyElementText">Apply text</button></div>
+  </article>
+  <article class="visual-card"><h4>C. Style an element</h4><p class="help">Set the text color, background, font size, and alignment for the selected element.</p>
+  <div class="field-row"><div><label for="visualColor">Text color</label><input id="visualColor" type="color" value="#1f2937"></div><div><label for="visualBg">Background color</label><input id="visualBg" type="color" value="#ffffff"></div></div>
+  <label for="visualSize">Font size</label><select id="visualSize"><option value="">Keep current size</option><option value="14px">Small · 14 px</option><option value="16px">Normal · 16 px</option><option value="20px">Medium · 20 px</option><option value="28px">Large · 28 px</option><option value="40px">Extra large · 40 px</option></select>
+  <label for="visualAlign">Text alignment</label><select id="visualAlign"><option value="">Keep current alignment</option><option value="left">Left</option><option value="center">Center</option><option value="right">Right</option></select>
+  <div class="visual-actions"><button id="clearVisualStyles">Remove added styles</button><button class="primary" id="applyElementStyle">Apply styles</button></div>
+  </article>
+  <article class="visual-card"><h4>D. Add a ready-made element</h4><p class="help">Create a section, card, or banner without writing HTML. The location follows your Project Explorer selection.</p>
+  <label for="quickSectionTitle">Section title</label><input id="quickSectionTitle" type="text" placeholder="Example: About this project">
+  <label for="quickSectionText">Section content</label><textarea id="quickSectionText" placeholder="Enter section content..."></textarea>
+  <div class="field-row"><div><label for="quickSectionStyle">Section style</label><select id="quickSectionStyle"><option value="card">Modern card</option><option value="plain">Simple</option><option value="banner">Colored banner</option></select></div><div><label for="quickSectionAlign">Alignment</label><select id="quickSectionAlign"><option value="left">Left</option><option value="center">Center</option></select></div></div>
+  <button class="primary" id="addQuickSection">＋ Add section</button>
+  </article>
+ </div>
+ <div class="visual-note">Important: visual changes are applied to the HTML currently in the editor. The original file on your computer is not overwritten; download the edited file yourself. Projects using frameworks or JavaScript-generated interfaces may require code editing.</div>
+ </section>
+ <section class="builder" aria-labelledby="builderTitle">
+  <div class="builder-head"><div><h3 id="builderTitle"> Beginner Mode — build a page without writing code</h3><p>Choose what to add, fill in the fields, and press the button. The HTML will be generated automatically.</p></div><span class="kbd">NO CODING REQUIRED</span></div>
+  <div class="builder-grid">
+   <article class="builder-card">
+    <h4>1. Header / introduction</h4><p class="help">The top of the page, with a main heading and short introduction.</p>
+    <label for="bHeaderTitle">Header title</label><input id="bHeaderTitle" type="text" placeholder="Example: Welcome to my website">
+    <label for="bHeaderSub">Short description</label><textarea id="bHeaderSub" placeholder="Write an introductory sentence here..."></textarea>
+    <button class="primary" id="addHeader">＋ Add header</button>
+   </article>
+   <article class="builder-card">
+    <h4>2. Body / text content</h4><p class="help">For paragraphs, stories, information, or the main explanation.</p>
+    <label for="bBodyTitle">Section heading (optional)</label><input id="bBodyTitle" type="text" placeholder="Example: About us">
+    <label for="bBodyText">Text content</label><textarea id="bBodyText" placeholder="Write your paragraph here..."></textarea>
+    <button class="primary" id="addBody">＋ Add text section</button>
+   </article>
+   <article class="builder-card">
+    <h4>3. Image / photo</h4><p class="help">Choose an image from your computer. It will be embedded in the HTML so it stays in one file.</p>
+    <label for="bImage">Upload image</label><input id="bImage" type="file" accept="image/*">
+    <label for="bImageAlt">Image description</label><input id="bImageAlt" type="text" placeholder="Example: Main product photo">
+    <button id="addImage">＋ Insert image</button>
+   </article>
+   <article class="builder-card">
+    <h4>4. Audio / music</h4><p class="help">Choose an audio file from your computer. It will be embedded in the HTML, which may increase file size.</p>
+    <label for="bAudio">Upload audio</label><input id="bAudio" type="file" accept="audio/*">
+    <label for="bAudioTitle">Audio title</label><input id="bAudioTitle" type="text" placeholder="Example: Listen to the demo">
+    <button id="addAudio">＋ Insert audio player</button>
+   </article>
+   <article class="builder-card">
+    <h4>5. Button / link</h4><p class="help">Create a button that links to another page or URL.</p>
+    <label for="bButtonText">Button label</label><input id="bButtonText" type="text" placeholder="Example: Contact me">
+    <label for="bButtonUrl">Destination URL</label><input id="bButtonUrl" type="url" placeholder="https://example.com">
+    <button id="addButton">＋ Add button</button>
+   </article>
+   <article class="builder-card">
+    <h4>6. How it works</h4><p class="help">New content will be inserted into <code>&lt;body&gt;</code> HTML.</p>
+    <p class="help">After adding a section, select <b>Run Preview</b> to preview the result. When you are satisfied, select <b>Download HTML</b>.</p>
+    <button id="builderHelp">Show quick instructions</button>
+   </article>
+  </div>
+  <div class="builder-note">Tip: you can still edit the code manually in the left panel. Beginner Mode simply generates starter markup.</div>
+ </section>
+ <section class="workspace">
+ <div class="pane">
+  <div class="pane-head"><div class="pane-title"><span class="dot"></span><div>HTML Code <small>Code editor</small></div></div><div class="pane-head-actions"><span class="kbd" id="lineCount">1 line</span></div></div>
+  <div class="editor-wrap"><div class="linebar" id="lineNumbers">1</div><textarea class="editor" id="code" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="HTML Code" wrap="off"></textarea></div>
+  <div class="editor-foot"><span id="codeStats">0 characters</span><span>HTML · CSS · JavaScript</span><span id="editState">Not modified</span></div>
+ </div>
+ <div class="pane">
+  <div class="pane-head"><div class="pane-title"><span class="dot" style="background:var(--green)"></span><div>Live Preview <small>Rendered page</small></div></div><div class="pane-head-actions"><button id="refreshBtn">⟳ Refresh</button><button id="newTabBtn">↗ New tab</button></div></div>
+  <div class="preview-wrap"><iframe id="preview" title="Preview HTML" sandbox="allow-scripts allow-forms allow-modals allow-popups"></iframe><div class="preview-empty" id="empty"><div><strong>Preview is ready</strong><span>Select “Run Preview” to view the page.</span></div></div></div>
+  <div class="preview-foot"><span>● Local browser preview</span><span id="previewState">Not run yet</span></div>
+ </div>
+ </section>
+ <section class="bottom">
+ <div class="info"><h3> How to use</h3><div class="steps"><div class="step"><b>1. Open a file</b><span>Choose your .html file to get started.</span></div><div class="step"><b>2. Edit and preview</b><span>Edit the code on the left, then run the preview.</span></div><div class="step"><b>3. Download</b><span>Save as a new HTML file without overwriting the original.</span></div></div></div>
+ <div class="info"><h3> Tips</h3><p>Start with the title in <span class="kbd">&lt;title&gt;</span>, text in <span class="kbd">&lt;body&gt;</span>, or styles in <span class="kbd">&lt;style&gt;</span>. To edit an existing project, select <b>Open HTML</b> and choose the file.</p></div>
+ </section>
+
+ <section class="patchnotes" aria-labelledby="whatsNewTitle">
+  <h3 id="whatsNewTitle">Youl1nk Studio — What's New in v2.1.0</h3>
+  <p class="release-summary">A language and release-management update focused on a cleaner, English-only interface and a clearer development roadmap.</p>
+  <ul>
+   <li>Translated the application interface, onboarding screen, helper text, prompts, and feedback messages into English.</li>
+   <li>Removed emoji decoration from the application UI and replaced the visual mark with a simple code symbol.</li>
+   <li>Added a dedicated What's New and What's Next roadmap so users can see current improvements and planned work.</li>
+   <li>Updated the application version to v2.1.0 and refreshed the release notes.</li>
+   <li>Kept the HTML editor, live preview, project analysis, visual editing, section maker, media insertion, and HTML export workflows.</li>
+  </ul>
+ </section>
+ <section class="patchnotes roadmap" aria-labelledby="whatsNextTitle">
+  <h3 id="whatsNextTitle">What's Next</h3>
+  <p class="release-summary">Planned improvements for future releases. These items are a roadmap, not features already shipped.</p>
+  <div class="roadmap-grid">
+   <article class="roadmap-item"><span class="roadmap-version">v2.2.0 · Planned</span><h4>Project Workspace</h4><p>Manage project files, rename projects more clearly, and improve the open/save workflow.</p></article>
+   <article class="roadmap-item"><span class="roadmap-version">v2.3.0 · Planned</span><h4>Safer Visual Editing</h4><p>Improve element selection, undo/redo, and clearer warnings before destructive edits.</p></article>
+   <article class="roadmap-item"><span class="roadmap-version">v2.4.0 · Planned</span><h4>Assets and Dependencies</h4><p>Better guidance for linked CSS, JavaScript, images, audio, and projects that use multiple files.</p></article>
+   <article class="roadmap-item"><span class="roadmap-version">Future · Under consideration</span><h4>Quality of Life</h4><p>Search in code, improved formatting, keyboard shortcuts, and a more detailed project overview.</p></article>
+  </div>
+ </section>
+</main>
+<input id="fileInput" type="file" accept=".html,.htm,text/html">
+<div class="toast" id="toast">Done!</div>
+<script>
+const $=id=>document.getElementById(id);
+const starter=`<!doctype html>
+<html lang="en">
+<head>
+ <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+ <title>My Awesome Website</title>
+ <style>
+  * { box-sizing: border-box; }
+  body {
+   margin: 0; min-height: 100vh; display: grid; place-items: center;
+   font-family: system-ui, sans-serif; color: #f8fafc;
+   background: radial-gradient(circle at top left, #2563eb, transparent 45%),
+         linear-gradient(135deg, #0f172a, #312e81);
+   padding: 24px;
+  }
+  .card {
+   max-width: 620px; padding: 42px; border-radius: 28px;
+   background: #ffffff12; border: 1px solid #ffffff35;
+   box-shadow: 0 25px 80px #0004; text-align: center;
+  }
+  .icon { font-size: 48px; }
+  h1 { font-size: clamp(32px, 7vw, 54px); margin: 12px 0; }
+  p { color: #dbeafe; line-height: 1.7; }
+  button {
+   margin-top: 14px; border: 0; border-radius: 99px; padding: 13px 22px;
+   font-weight: 800; background: #67e8f9; color: #082f49; cursor: pointer;
+  }
+ </style>
+</head>
+<body>
+ <main class="card">
+  <div class="icon">&lt;/&gt;</div>
+  <h1>Hello, world!</h1>
+  <p>Ini website pertamamu. Ubah text, color, dan desain di editor HTML sebelah kiri.</p>
+  <button onclick="document.querySelector('p').textContent='Yes! Tombolnya successfully '">Try the button</button>
+ </main>
+</body>
+</html>`;
+const sample=`<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pixel Studio — Landing Page</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,sans-serif;color:#f8fafc;background:#080b18}nav{display:flex;justify-content:space-between;align-items:center;padding:24px 7%;border-bottom:1px solid #ffffff18}.brand{font-weight:900;letter-spacing:1px}.brand span{color:#a78bfa}.pill{padding:10px 16px;border:1px solid #ffffff35;border-radius:99px;color:#fff;text-decoration:none}.hero{max-width:1050px;margin:auto;padding:100px 24px 80px;text-align:center}.tag{display:inline-block;border:1px solid #8b5cf688;background:#8b5cf622;color:#ddd6fe;padding:8px 13px;border-radius:99px;font-size:12px}.hero h1{font-size:clamp(42px,8vw,88px);line-height:.99;letter-spacing:-4px;margin:26px 0}.hero h1 span{background:linear-gradient(90deg,#67e8f9,#a78bfa,#f0abfc);color:transparent;background-clip:text}.hero p{max-width:620px;margin:0 auto;color:#a9b5cc;line-height:1.8;font-size:17px}.actions{margin-top:30px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}.btn{padding:14px 20px;border-radius:12px;text-decoration:none;font-weight:800;color:#0b1020;background:linear-gradient(120deg,#67e8f9,#c4b5fd)}.secondary{color:#fff;background:#ffffff0c;border:1px solid #ffffff20}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:1050px;margin:0 auto;padding:0 24px 70px}.feature{padding:24px;border:1px solid #ffffff1c;background:linear-gradient(145deg,#ffffff0d,#ffffff03);border-radius:20px}.feature b{font-size:16px}.feature p{color:#9ba9c2;line-height:1.7;font-size:13px}@media(max-width:650px){.grid{grid-template-columns:1fr}.hero{padding-top:70px}.hero h1{letter-spacing:-2px}}
+</style></head><body>
+<nav><div class="brand">PIXEL<span></span>STUDIO</div><a class="pill" href="#features">Explore</a></nav>
+<section class="hero"><span class="tag">CREATIVE DIGITAL SPACE</span><h1>Make it <span>happen.</span></h1><p>Big ideas start with a single line of code. Build something bold, beautiful, and truly yours.</p><div class="actions"><a class="btn" href="#features">Start exploring</a><a class="btn secondary" href="#about">About the project</a></div></section>
+<section class="grid" id="features"><article class="feature"><b>Distinctive design</b><p>Color, typography, and space that make every detail feel intentional.</p></article><article class="feature"><b> Fast and responsive</b><p>A flexible layout that works beautifully on desktop and mobile.</p></article><article class="feature" id="about"><b>⌘ Creative freedom</b><p>Everything starts with HTML, CSS, and a little curiosity. Now it is your turn.</p></article></section>
+</body></html>`;
+let dirty=false, loadedName='My Awesome Website', previewUrl='';
+function updateCounts(){const v=$('code').value;const lines=v.split('\n').length;$('lineNumbers').textContent=Array.from({length:lines},(_,i)=>i+1).join('\n');$('lineCount').textContent=lines+' lines';$('codeStats').textContent=v.length.toLocaleString('en-US')+' characters';}
+function toast(t){$('toast').textContent=t;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),2100)}
+function setDirty(v=true){dirty=v;$('editState').textContent=v?'Unsaved changes':'Up to date in editor';$('status').textContent=v?'● Unsaved changes':'● Ready to edit';$('status').style.color=v?'#fcd34d':'var(--green)';$('status').style.borderColor=v?'#8a6424':'#225c4e'}
+function render(){const code=$('code').value;const blob=new Blob([code],{type:'text/html'});if(previewUrl)URL.revokeObjectURL(previewUrl);previewUrl=URL.createObjectURL(blob);$('preview').src=previewUrl;$('previewState').textContent='Diperbarui '+new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});$('empty').style.display='none';setDirty(false);toast('Preview successfully diperbarui ')}
+function setCode(v){$('code').value=v;updateCounts();setDirty(false);render()}
+$('code').value=starter;updateCounts();render();setDirty(false);setTimeout(analyzeProject,0);
+$('code').addEventListener('input',()=>{updateCounts();setDirty(true)});
+$('code').addEventListener('scroll',()=>{$('lineNumbers').scrollTop=$('code').scrollTop});
+$('code').addEventListener('keydown',e=>{if(e.key==='Tab'){e.preventDefault();const a=e.target,s=a.selectionStart,end=a.selectionEnd;a.setRangeText(' ',s,end,'end');updateCounts();setDirty(true)}if((e.ctrlKey||e.metaKey)&&e.key==='Enter'){e.preventDefault();render()}});
+$('previewBtn').onclick=render;$('refreshBtn').onclick=render;
+$('resetBtn').onclick=()=>{if(confirm('Restore the starter template? Current editor content will be replaced.')){ $('projectName').value='My Awesome Website';setCode(starter);toast('Starter template loaded')}}; 
+$('sampleBtn').onclick=()=>{if(confirm('Load the sample landing page? Current editor content will be replaced.')){ $('projectName').value='Pixel Studio Landing Page';setCode(sample);toast('Sample page loaded')}}; 
+$('openBtn').onclick=()=>$('fileInput').click();
+$('fileInput').addEventListener('change',async e=>{const f=e.target.files&&e.target.files[0];if(!f)return;try{const t=await f.text();$('projectName').value=f.name.replace(/\.(html?|HTML?)$/i,'')||'Imported Project';setCode(t);loadedName=f.name;analyzeProject();toast('Project opened and analyzed: '+f.name)}catch(err){alert('The file could not be read. Try another HTML file.')}e.target.value=''});
+$('saveBtn').onclick=()=>{const code=$('code').value;let name=$('projectName').value.trim()||'my-website';name=name.replace(/[\\/:*?"<>|]/g,'-').replace(/\.html?$/i,'');const blob=new Blob([code],{type:'text/html;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name+'.html';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('HTML file downloaded: '+name+'.html')};
+$('copyBtn').onclick=async()=>{try{await navigator.clipboard.writeText($('code').value);toast('Code copied successfully')}catch(e){$('code').focus();$('code').select();document.execCommand('copy');toast('Code copied')}};
+$('formatBtn').onclick=()=>{const code=$('code').value;const lines=code.replace(/>\s*</g,'>\n<').split('\n');let depth=0;const out=lines.map(line=>{line=line.trim();if(!line)return '';if(/^<\/(body|html|head|main|section|article|div|ul|ol|li|style|script|header|footer|nav|form|table|tr|h[1-6])\b/i.test(line))depth=Math.max(0,depth-1);const result=' '.repeat(depth)+line;if(/^<(html|head|body|main|section|article|div|ul|ol|li|style|script|header|footer|nav|form|table|tr|h[1-6])\b/i.test(line)&&!/^<(input|img|hr|br|meta|link)\b/i.test(line)&&!line.includes('</'))depth++;return result}).filter(Boolean).join('\n');if(out!==code){$('code').value=out;updateCounts();setDirty(true);toast('Basic indentation formatted')}else toast('The code is already formatted')};
+$('newTabBtn').onclick=()=>{const blob=new Blob([$('code').value],{type:'text/html'});const u=URL.createObjectURL(blob);window.open(u,'_blank','noopener');setTimeout(()=>URL.revokeObjectURL(u),60000)};
+$('projectName').addEventListener('input',()=>{if(!$('code').value.includes('<title>'))return;});
+
+function escapeHtml(value){return String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+let detectedTargets=[];
+function parseCurrent(){return new DOMParser().parseFromString($('code').value,'text/html');}
+function cssEscapeSafe(v){return String(v).replace(/[^a-zA-Z0-9_-]/g,'\\$&');}
+function selectorFor(el,doc){
+ if(el.id)return '#'+CSS.escape(el.id);
+ const tag=el.tagName.toLowerCase();
+ if(el.classList&&el.classList.length){const cls=[...el.classList].filter(c=>/^[\w-]+$/.test(c));if(cls.length){const sel=tag+'.'+cls.slice(0,2).join('.');try{if(doc.querySelectorAll(sel).length===1)return sel;}catch(e){}}}
+ let nth=1,node=el;while((node=node.previousElementSibling)){if(node.tagName===el.tagName)nth++;}
+ return tag+':nth-of-type('+nth+')';
+}
+function analyzeProject(){
+ const doc=parseCurrent(); const els=[...doc.body.querySelectorAll('header,nav,main,section,article,aside,footer,h1,h2,h3,p,img,audio,video,button,a,form')];
+ detectedTargets=[]; const select=$('insertTarget');select.innerHTML='<option value="auto">Automatic: main content area</option>';
+ const used=new Set();
+ els.forEach((el,i)=>{if(['H1','H2','H3','P','IMG','AUDIO','VIDEO','BUTTON','A'].includes(el.tagName)&&el.parentElement&&['SECTION','ARTICLE','MAIN','HEADER','FOOTER','NAV'].includes(el.parentElement.tagName))return;
+  let sel=selectorFor(el,doc); if(used.has(sel))return;used.add(sel);
+  let label=el.tagName.toLowerCase(); if(el.id)label+='#'+el.id;else if(el.classList.length)label+='.'+[...el.classList].slice(0,2).join('.');
+  const txt=(el.innerText||el.getAttribute('alt')||el.getAttribute('aria-label')||'').trim().replace(/\s+/g,' ').slice(0,90);
+  const meaningful=['HEADER','NAV','MAIN','SECTION','ARTICLE','ASIDE','FOOTER'].includes(el.tagName)||['H1','H2','H3','P','IMG','AUDIO','VIDEO','BUTTON','A','FORM'].includes(el.tagName);
+  if(!meaningful)return;
+  const id='target'+detectedTargets.length;detectedTargets.push({id,selector:sel,tag:el.tagName.toLowerCase(),label,txt});
+  const opt=document.createElement('option');opt.value=id;opt.textContent=label+(txt?' — '+txt:'');select.appendChild(opt);
+ });
+ const counts={header:doc.body.querySelectorAll('header').length,nav:doc.body.querySelectorAll('nav').length,main:doc.body.querySelectorAll('main').length,section:doc.body.querySelectorAll('section').length,article:doc.body.querySelectorAll('article').length,footer:doc.body.querySelectorAll('footer').length,img:doc.body.querySelectorAll('img').length,audio:doc.body.querySelectorAll('audio,video').length,buttons:doc.body.querySelectorAll('button,a').length};
+ $('detectSummary').textContent='Analysis complete. Found '+detectedTargets.length+' selectable structure targets.';
+ const list=$('detectList');list.innerHTML='';
+ const summaryItems=[['Header / navigation',counts.header+' header · '+counts.nav+' nav'],['Content areas',counts.main+' main · '+counts.section+' section · '+counts.article+' article'],['Media',counts.img+' image · '+counts.audio+' audio/video'],['Interactions',counts.buttons+' buttons/links'],['Footer',counts.footer+' footer']];
+ summaryItems.forEach(([title,detail])=>{const div=document.createElement('div');div.className='detect-item';div.innerHTML='<b>'+title+'</b><span>'+detail+'</span>';list.appendChild(div)});
+ detectedTargets.slice(0,18).forEach(t=>{const div=document.createElement('div');div.className='detect-item';const b=document.createElement('b');b.textContent=t.label;const span=document.createElement('span');span.textContent=t.txt||'No text summary; this target is still selectable';div.append(b,span);list.appendChild(div)});
+ $('targetRule').textContent=doc.querySelector('main')?'Automatic rule: new content is inserted into <main> when the automatic target is selected.':'Automatic rule: no <main> found, so content is inserted into <body>.';
+}
+function resolveTarget(doc,placement){
+ if(placement==='header')return doc.querySelector('header, .hero, nav')||doc.body;
+ if(placement==='main')return doc.querySelector('main')||doc.querySelector('body');
+ if(placement==='beforeFooter')return doc.querySelector('footer')||doc.querySelector('body');
+ if(placement==='bodyEnd')return doc.body;
+ if(placement==='afterImage'){const imgs=[...doc.querySelectorAll('img')];return imgs.length?imgs[imgs.length-1]:doc.querySelector('main')||doc.body;}
+ const chosen=$('insertTarget').value;
+ if(chosen!=='auto'){const t=detectedTargets.find(x=>x.id===chosen);if(t){try{const found=doc.querySelector(t.selector);if(found)return found;}catch(e){}}}
+ return doc.querySelector('main')||doc.body;
+}
+function addAtTarget(fragment,placement='selected'){
+ const doc=parseCurrent();let target=resolveTarget(doc,placement);const pos=$('insertPosition').value;
+ const template=doc.createElement('template');template.innerHTML=fragment;
+ if(placement==='beforeFooter'){target.parentNode?target.parentNode.insertBefore(template.content,target):target.append(template.content);}
+ else if(placement==='bodyEnd'){doc.body.append(template.content);}
+ else if(placement==='afterImage'){target.insertAdjacentElement?target.insertAdjacentHTML('afterend',fragment):target.insertAdjacentHTML('beforeend',fragment);}
+ else if(pos==='before'&&target.parentNode)target.parentNode.insertBefore(template.content,target);
+ else if(pos==='after'&&target.parentNode)target.parentNode.insertBefore(template.content,target.nextSibling);
+ else if(pos==='prepend')target.insertBefore(template.content,target.firstChild);
+ else if(pos==='bodyEnd')doc.body.append(template.content);
+ else target.append(template.content);
+ const html='<!doctype html>\n'+doc.documentElement.outerHTML;
+ $('code').value=html;updateCounts();setDirty(true);toast('Content added to the selected location ');$('code').focus();analyzeProject();
+}
+function addToBody(fragment){addAtTarget(fragment,'selected');}
+function readAsDataURL(file){return new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=()=>reject(new Error('File could not be read'));reader.readAsDataURL(file);});}
+$('analyzeBtn').onclick=()=>{analyzeProject();toast('Project structure analyzed again')};
+$('code').addEventListener('input',()=>{if($('code').value.length<1500000)analyzeProject();});
+$('addHeader').onclick=()=>{
+ const title=$('bHeaderTitle').value.trim(),sub=$('bHeaderSub').value.trim();if(!title&&!sub){toast('Enter a header title or description first');return;}
+ addToBody(`<header style="padding:32px 20px;text-align:center;background:#eef2ff;color:#172554"><h1>${escapeHtml(title||'Page title')}</h1>${sub?`<p>${escapeHtml(sub)}</p>`:''}</header>`);
+};
+$('addBody').onclick=()=>{
+ const title=$('bBodyTitle').value.trim(),body=$('bBodyText').value.trim();if(!title&&!body){toast('Enter a heading or text first');return;}
+ addToBody(`<section style="max-width:900px;margin:24px auto;padding:24px;font-family:system-ui,sans-serif;color:#1f2937">${title?`<h2>${escapeHtml(title)}</h2>`:''}${body?`<p style="line-height:1.8;white-space:pre-wrap">${escapeHtml(body)}</p>`:''}</section>`);
+};
+$('addImage').onclick=async()=>{
+ const file=$('bImage').files[0];if(!file){toast('Choose an image file first');return;}if(file.size>8*1024*1024&&!confirm('The image is larger than 8 MB and will make the HTML file large. Continue?'))return;
+ try{const data=await readAsDataURL(file),alt=escapeHtml($('bImageAlt').value.trim()||file.name),caption=escapeHtml($('imageCaption').value.trim());const width=$('imageWidth').value;const max=width==='small'?'320px':width==='medium'?'640px':width==='full'?'100%':'900px';const place=$('imagePlacement').value;
+ addAtTarget(`<figure style="max-width:${max};margin:24px auto;padding:0 16px;text-align:center"><img src="${data}" alt="${alt}" style="display:block;max-width:100%;height:auto;border-radius:12px;margin:auto">${caption?`<figcaption style="margin-top:8px">${caption}</figcaption>`:''}</figure>`,place);
+ }catch(e){toast('Could not read the image');}
+};
+$('addAudio').onclick=async()=>{
+ const file=$('bAudio').files[0];if(!file){toast('Choose an audio file first');return;}if(file.size>12*1024*1024&&!confirm('The audio file is larger than 12 MB and will make the HTML file very large. Continue?'))return;
+ try{const data=await readAsDataURL(file),title=escapeHtml($('bAudioTitle').value.trim()||file.name),behavior=$('audioBehavior').value,loop=$('audioLoop').value==='yes'?' loop':'',place=$('audioPlacement').value;let player='';
+ if(behavior==='click')player=`<button type="button" onclick="const a=this.nextElementSibling;a.play()" style="padding:12px 18px;border:0;border-radius:10px;background:#2563eb;color:white;cursor:pointer">▶ Play audio</button><audio controls preload="metadata"${loop} style="display:block;width:100%;margin-top:10px"><source src="${data}" type="${escapeHtml(file.type||'audio/mpeg')}"></audio>`;
+ else if(behavior==='visible')player=`<audio controls preload="metadata"${loop} data-play-on-visible="true" style="width:100%"><source src="${data}" type="${escapeHtml(file.type||'audio/mpeg')}"></audio>`;
+ else if(behavior==='loadMuted')player=`<audio controls autoplay muted preload="auto"${loop} style="width:100%"><source src="${data}" type="${escapeHtml(file.type||'audio/mpeg')}"></audio><p style="font-size:12px">Audio starts muted. Visitors can enable sound using the audio controls.</p>`;
+ else player=`<audio controls preload="metadata"${loop} style="width:100%"><source src="${data}" type="${escapeHtml(file.type||'audio/mpeg')}">Your browser does not support audio.</audio>`;
+ const fragment=`<section class="easy-editor-audio" style="max-width:900px;margin:24px auto;padding:20px;font-family:system-ui,sans-serif"><h2>${title}</h2>${player}</section>`;
+ addAtTarget(fragment,place);
+ if(behavior==='visible'){const code=$('code').value;const script=`<script>(function(){const audios=document.querySelectorAll('audio[data-play-on-visible]');if(!('IntersectionObserver' in window))return;const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.play().catch(()=>{});observer.unobserve(entry.target)}}),{threshold:.5});audios.forEach(a=>observer.observe(a));})();<\/script>`;const idx=$('code').value.toLowerCase().lastIndexOf('</body>');$('code').value=idx>=0?$('code').value.slice(0,idx)+script+$('code').value.slice(idx):$('code').value+script;updateCounts();setDirty(true);}
+ }catch(e){toast('Could not read the audio file');}
+};
+$('addButton').onclick=()=>{
+ const label=$('bButtonText').value.trim(),url=$('bButtonUrl').value.trim();
+ if(!label||!url){toast('Enter a button label and destination URL first');return;}
+ let safe=url;try{const parsed=new URL(url,location.href);if(!['http:','https:','mailto:','tel:'].includes(parsed.protocol))throw new Error();safe=parsed.href;}catch(e){toast('Invalid URL. Use https:// or another valid address.');return;}
+ addToBody(`<p style="margin:24px;text-align:center"><a href="${escapeHtml(safe)}" style="display:inline-block;padding:12px 20px;border-radius:10px;background:#2563eb;color:white;text-decoration:none;font-weight:700">${escapeHtml(label)}</a></p>`);
+};
+$('builderHelp').onclick=()=>alert('1. Fill in the fields for the section you need.\\n2. Select the Add or Insert button.\\n3. Select Run Preview to see the result.\\n4. Select Download HTML to save your website.');
+
+
+// Youl1nk Studio v2.1.0 visual editing tools
+$('startStudio').addEventListener('click',()=>{$('introOverlay').classList.add('hidden')});
+$('introOverlay').addEventListener('click',e=>{if(e.target===$('introOverlay'))$('introOverlay').classList.add('hidden')});
+window.addEventListener('keydown',e=>{if(e.key==='Escape')$('introOverlay').classList.add('hidden')});
+function refreshVisualTargets(){
+ const sel=$('visualTarget'); if(!sel)return; const old=sel.value; sel.innerHTML='<option value="">Choose elemen...</option>';
+ detectedTargets.forEach(t=>{const o=document.createElement('option');o.value=t.id;o.textContent=t.label+(t.txt?' — '+t.txt.slice(0,60):'');sel.appendChild(o)});
+ if(detectedTargets.some(t=>t.id===old))sel.value=old;
+}
+const oldAnalyze=analyzeProject;
+analyzeProject=function(){oldAnalyze();refreshVisualTargets();syncPageFieldsFromCode()};
+function syncPageFieldsFromCode(){try{const d=parseCurrent();$('pageTitle').value=d.querySelector('title')?.textContent||'';$('pageDescription').value=d.querySelector('meta[name="description"]')?.getAttribute('content')||''}catch(e){}}
+function rewriteDoc(mutator){try{const d=parseCurrent();mutator(d);const out='<!doctype html>\n'+d.documentElement.outerHTML;$('code').value=out;updateCounts();render();analyzeProject();setDirty(true);toast('Changes applied to HTML ')}catch(e){console.error(e);toast('Could not apply changes; check the HTML structure')}}
+$('applyPageInfo').addEventListener('click',()=>{
+ const title=$('pageTitle').value.trim();const desc=$('pageDescription').value.trim();
+ rewriteDoc(d=>{let t=d.querySelector('title');if(!t){t=d.createElement('title');(d.head||d.documentElement).appendChild(t)}if(title)t.textContent=title;let m=d.querySelector('meta[name="description"]');if(desc){if(!m){m=d.createElement('meta');m.name='description';d.head.appendChild(m)}m.content=desc}else if(m)m.remove()});
+});
+function selectedVisualTarget(d){const item=detectedTargets.find(t=>t.id===$('visualTarget').value);if(!item)return null;try{return d.querySelector(item.selector)}catch(e){return null}}
+$('loadElementText').addEventListener('click',()=>{const d=parseCurrent(),el=selectedVisualTarget(d);if(!el){toast('Choose an element to edit first');return}$('visualText').value=(el.innerText||el.textContent||'').trim();toast('Element text loaded')});
+$('applyElementText').addEventListener('click',()=>{const value=$('visualText').value;if(!$('visualTarget').value){toast('Choose an element to edit first');return}rewriteDoc(d=>{const el=selectedVisualTarget(d);if(!el)throw new Error('Target not found');if(!value.trim()){if(!confirm('Empty text will clear the selected element. Continue?'))return}el.textContent=value})});
+$('applyElementStyle').addEventListener('click',()=>{if(!$('visualTarget').value){toast('Choose an element to edit first');return}rewriteDoc(d=>{const el=selectedVisualTarget(d);if(!el)throw new Error('Target not found');const c=$('visualColor').value,bg=$('visualBg').value,size=$('visualSize').value,align=$('visualAlign').value;el.style.color=c;el.style.backgroundColor=bg;if(size)el.style.fontSize=size;if(align)el.style.textAlign=align;el.style.padding=el.style.padding||'6px'})});
+$('clearVisualStyles').addEventListener('click',()=>{if(!$('visualTarget').value){toast('Choose an element first');return}rewriteDoc(d=>{const el=selectedVisualTarget(d);if(!el)throw new Error('Target not found');el.removeAttribute('style')})});
+$('addQuickSection').addEventListener('click',()=>{
+ const title=$('quickSectionTitle').value.trim(),body=$('quickSectionText').value.trim();if(!title&&!body){toast('Enter a section title or content first');return}
+ const style=$('quickSectionStyle').value,align=$('quickSectionAlign').value;
+ let css='max-width:960px;margin:24px auto;padding:28px 24px;text-align:'+align+';';
+ if(style==='card')css+='border:1px solid #dbe3ef;border-radius:20px;background:#f8fafc;color:#172033;box-shadow:0 12px 30px #0f172a12;';
+ if(style==='banner')css+='border-radius:18px;background:linear-gradient(120deg,#dbeafe,#ede9fe);color:#172033;';
+ if(style==='plain')css+='color:inherit;';
+ addAtTarget('<section style="'+css+'">'+(title?'<h2>'+escapeHtml(title)+'</h2>':'')+(body?'<p style="line-height:1.8;white-space:pre-wrap">'+escapeHtml(body)+'</p>':'')+'</section>','selected');
+});
+// Keep the document title field useful after opening or resetting projects.
+$('projectName').addEventListener('change',()=>{let n=$('projectName').value.trim();if(n){n=n.replace(/\.html?$/i,'');$('projectName').value=n}});
+
+analyzeProject();syncPageFieldsFromCode();
+window.addEventListener('beforeunload',e=>{if(dirty){e.preventDefault();e.returnValue=''}});
+</script>
+</body></html>
